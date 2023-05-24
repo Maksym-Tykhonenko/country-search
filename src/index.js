@@ -10,7 +10,6 @@ const refs = {
     input: document.querySelector('#search-box'),
     countryList: document.querySelector('.country-list'),
     countryInfo: document.querySelector('.country-info'),
-        
 };
 
 refs.input.addEventListener('input', debounce(handleInputSearch, DEBOUNCE_DELAY));
@@ -18,8 +17,10 @@ refs.countryList.addEventListener('click', handleCountryNameClick);
 
 function handleCountryNameClick(event) { 
     clearRender();
-    const countryName = event.target.textContent === '' ? event.target.alt : event.target.textContent.trim();
-    console.log(countryName)
+    const countryName = event.target.textContent === '' ?
+        event.target.alt :
+        event.target.textContent.trim();
+    //console.log(countryName)
     fetchCountries(countryName).then(country => {
         renderCountryInfo(country);
     })
@@ -42,8 +43,7 @@ function handleInputSearch(event) {
             } else if (countrys.length === 1) {
 
                 renderCountryInfo(countrys)
-            } 
-        
+            }
         }).catch(error => {
             Notiflix.Notify.failure("Oops, there is no country with that name")
             return error
@@ -57,7 +57,7 @@ function renderCountryInfo(country) {
     const markup = country.map(({ name, capital, population, flags, languages }) => {
         return `<ul class='country-info-list'>
         <li><img src="${flags.svg}" alt="${name.common}" width="120px"></li>
-        <li><h2><a>${name.official}</a></h2></li>
+        <li><h2>${name.official}</h2></li>
         <li><h3>${name.common}</h3></li>
         <li><h4>Capital: ${capital}</h4></li>
         <li><p>Language: ${Object.values(languages)}</p></li>
@@ -85,10 +85,3 @@ function clearRender() {
     refs.countryList.innerHTML = '';
     refs.countryInfo.innerHTML = '';
 };
-
-
-
-
-
-
-
